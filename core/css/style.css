@@ -1,51 +1,278 @@
-body,td,th {
-	font-size: 14px;
-	color: #FFF;
-	font-family: "Courier New", Courier, monospace;
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
 body {
-	background-color: #000;
-	text-align: center;
-	font-weight: bold;
-	margin: 0;
-	padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    color: #FFFFFF;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
 }
+
+/* Animated Gradient Background */
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    background: linear-gradient(135deg, 
+        #000000 0%,
+        #050505 25%,
+        #0a0a0a 50%,
+        #030303 75%,
+        #000000 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Cyber Grid Background */
+.cyber-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-image: 
+        linear-gradient(rgba(138, 43, 226, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 43, 226, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes gridMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+/* Cyber Lines Animation */
+.cyber-lines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 150, 255, 0.05) 2px,
+            rgba(0, 150, 255, 0.05) 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(138, 43, 226, 0.05) 2px,
+            rgba(138, 43, 226, 0.05) 4px
+        );
+    animation: linesMove 15s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes linesMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(100px, 100px);
+    }
+}
+
+/* Container */
 .container {
-	max-width: 800px;
-	margin: 0 auto;
-	padding: 20px;
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px 60px 40px;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
+
+/* Content Wrapper */
+.content-wrapper {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+}
+
+/* Image Container with Glass Effect */
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+    margin-top: 100px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.05), 
+        rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 20px;
+}
+
 .nyan-gif {
-	max-width: 100%;
-	height: auto;
-	margin-bottom: 20px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 16px;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
 }
+
+/* Typography with Glass Effect */
 h1 {
-	color: #FFF;
-	margin: 20px 0;
-	line-height: 1.4;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.6),
+        0 0 15px rgba(138, 43, 226, 0.2);
+    letter-spacing: -0.02em;
+    padding: 20px;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 2s ease-in-out forwards,
+               textPulse 3s ease-in-out 2s infinite,
+               textGlow 2s ease-in-out 2s infinite alternate;
 }
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(0) scale(1.02);
+    }
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.6),
+            0 0 15px rgba(138, 43, 226, 0.2),
+            0 0 25px rgba(138, 43, 226, 0.1);
+    }
+    100% {
+        text-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.6),
+            0 0 20px rgba(138, 43, 226, 0.4),
+            0 0 35px rgba(0, 150, 255, 0.3),
+            0 0 45px rgba(138, 43, 226, 0.2);
+    }
+}
+
+
+/* Link Styles with Glass Effect */
 a {
-	font-size: 14px;
-	color: #0096ff;
+    font-size: 14px;
+    color: rgba(0, 150, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
 }
-a:link {
-	text-decoration: none;
-	color: #0096ff;
-	font-weight: bold;
-}
+
+a:link,
 a:visited {
-	text-decoration: none;
-	color: #0096ff;
-	font-weight: bold;
+    color: rgba(0, 150, 255, 0.9);
 }
+
 a:hover {
-	text-decoration: none;
-	color: #0F0;
-	font-weight: bold;
+    color: rgba(138, 43, 226, 1);
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.6);
 }
+
 a:active {
-	text-decoration: none;
-	color: #0096ff;
-	font-weight: bold;
+    color: rgba(0, 150, 255, 1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 20px;
+        margin: 20px;
+    }
+    
+    .image-container {
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+    
+    h1 {
+        font-size: 1.25rem;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 15px;
+    }
+    
+    h1 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+}
+
+::-moz-selection {
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
 }
