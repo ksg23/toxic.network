@@ -1,9 +1,3 @@
-# toxic.network
+# [toxic.network](https://toxic.network)
 
-*Where quantum mechanics meets binary code, legends are born.*
-
----
-
-**Follow the white rabbit.**
-
-[toxic.network](https://toxic.network)
+*Follow the white rabbit...*
