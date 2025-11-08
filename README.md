@@ -1,6 +1,6 @@
 # toxic.network
 
-> *Where quantum mechanics meets binary code, legends are born.*
+*Where quantum mechanics meets binary code, legends are born.*
 
 ---
 
