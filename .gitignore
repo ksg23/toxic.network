@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Env and secrets (if you add server-side or build config later)
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Dependencies (if you add npm etc.)
+node_modules/
+
+# Build output (if you add a build step later)
+dist/
+build/
+.cache/
+
+# Logs
+*.log
+npm-debug.log*
+

@@ -1,0 +1,2 @@
+# Redirect /tesla to /tesla/ so index.html is served
+/tesla /tesla/ 301
