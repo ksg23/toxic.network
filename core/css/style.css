@@ -6,7 +6,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Orbitron", sans-serif;
     font-size: 16px;
     color: #FFFFFF;
     overflow-x: hidden;
@@ -44,65 +44,15 @@ body {
     }
 }
 
-/* Cyber Grid Background */
-.cyber-grid {
+/* Moving cyber connecting wires */
+.cyber-wires {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: -2;
-    background-image: 
-        linear-gradient(rgba(138, 43, 226, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(138, 43, 226, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    animation: gridMove 20s linear infinite;
-    opacity: 0.3;
-}
-
-@keyframes gridMove {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(50px, 50px);
-    }
-}
-
-/* Cyber Lines Animation */
-.cyber-lines {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-    background: 
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(0, 150, 255, 0.05) 2px,
-            rgba(0, 150, 255, 0.05) 4px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 2px,
-            rgba(138, 43, 226, 0.05) 2px,
-            rgba(138, 43, 226, 0.05) 4px
-        );
-    animation: linesMove 15s linear infinite;
-    opacity: 0.4;
-}
-
-@keyframes linesMove {
-    0% {
-        transform: translate(0, 0);
-    }
-    100% {
-        transform: translate(100px, 100px);
-    }
+    pointer-events: none;
 }
 
 /* Container */
@@ -113,7 +63,7 @@ body {
     padding: 80px 40px 60px 40px;
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
 }
 
@@ -125,61 +75,59 @@ body {
     width: 100%;
 }
 
-/* Image Container with Glass Effect */
-.image-container {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 40px;
-    margin-top: 100px;
-    border-radius: 24px;
-    overflow: hidden;
-    background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.05), 
-        rgba(255, 255, 255, 0.02));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    padding: 20px;
-}
-
-.nyan-gif {
-    max-width: 100%;
+/* Free-flying nyan cat — random directions via JS */
+.nyan-flyer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: clamp(220px, 34vw, 420px);
     height: auto;
-    display: block;
-    border-radius: 16px;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    pointer-events: none;
+    filter: drop-shadow(0 0 14px rgba(138, 43, 226, 0.35));
+    will-change: transform;
+    transform-origin: center center;
 }
 
-/* Typography with Glass Effect */
+/* Typography — slow cinematic reveal */
 h1 {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.45;
     margin: 0;
     color: rgba(255, 255, 255, 0.9);
-    text-shadow: 
+    text-shadow:
         0 2px 8px rgba(0, 0, 0, 0.6),
         0 0 15px rgba(138, 43, 226, 0.2);
-    letter-spacing: -0.02em;
+    letter-spacing: 0.04em;
     padding: 20px;
     position: relative;
     opacity: 0;
-    animation: fadeIn 2s ease-in-out forwards,
-               textPulse 3s ease-in-out 2s infinite,
-               textGlow 2s ease-in-out 2s infinite alternate;
+    filter: blur(12px);
+    transform: translateY(28px);
+    animation:
+        textReveal 3.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards,
+        textPulse 3.5s ease-in-out 4.4s infinite,
+        textGlow 2.5s ease-in-out 4.4s infinite alternate;
 }
 
-@keyframes fadeIn {
+@keyframes textReveal {
     0% {
         opacity: 0;
-        transform: translateY(20px) scale(1);
+        filter: blur(12px);
+        transform: translateY(28px);
+        letter-spacing: 0.18em;
+    }
+    55% {
+        opacity: 0.85;
+        filter: blur(3px);
+        letter-spacing: 0.08em;
     }
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        filter: blur(0);
+        transform: translateY(0);
+        letter-spacing: 0.04em;
     }
 }
 
@@ -194,13 +142,13 @@ h1 {
 
 @keyframes textGlow {
     0% {
-        text-shadow: 
+        text-shadow:
             0 2px 8px rgba(0, 0, 0, 0.6),
             0 0 15px rgba(138, 43, 226, 0.2),
             0 0 25px rgba(138, 43, 226, 0.1);
     }
     100% {
-        text-shadow: 
+        text-shadow:
             0 2px 8px rgba(0, 0, 0, 0.6),
             0 0 20px rgba(138, 43, 226, 0.4),
             0 0 35px rgba(0, 150, 255, 0.3),
@@ -240,11 +188,10 @@ a:active {
         margin: 20px;
     }
     
-    .image-container {
-        padding: 15px;
-        margin-bottom: 30px;
+    .nyan-flyer {
+        width: clamp(180px, 55vw, 300px);
     }
-    
+
     h1 {
         font-size: 1.25rem;
         padding: 15px;

@@ -5,28 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Favicon and Touch Icons-->
-    <link rel="icon" type="image/x-icon" class="js-site-favicon" href="/core/images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/core/images/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/core/images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/core/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" class="js-site-favicon" href="/core/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/core/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/core/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/core/images/favicon.png">
 
     <title>toxic.network</title>
     <meta property="og:title" content="Toxic.Network" />
-    <meta property="og:image" content="https://toxic.network/core/images/nyan.gif" />
+    <meta property="og:image" content="https://toxic.network/core/images/nyan-original.gif" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/core/css/style.css">
 </head>
 <body>
     <div class="background-gradient"></div>
-    <div class="cyber-grid"></div>
-    <div class="cyber-lines"></div>
+    <canvas id="cyber-wires" class="cyber-wires" aria-hidden="true"></canvas>
+    <img src="/core/images/nyan.webp?v=10" alt="Nyan Cat animation" class="nyan-flyer">
     <div class="container">
         <div class="content-wrapper">
-            <div class="image-container">
-                <img src="/core/images/nyan.gif" alt="Nyan Cat animation" class="nyan-gif">
-            </div>
             <h1>Where quantum mechanics meets binary code, legends are born.</h1>
         </div>
     </div>
     <!-- follow the white rabbit.. -->
+    <script src="/core/js/cyber-wires.js"></script>
+    <script src="/core/js/nyan-fly.js"></script>
 </body>
 </html>
