@@ -223,3 +223,13 @@ html {
     background: rgba(255, 255, 255, 0.2);
     color: #FFFFFF;
 }
+
+/* Reduced motion — keep the headline visible even without the reveal animation */
+@media (prefers-reduced-motion: reduce) {
+    h1 {
+        opacity: 1;
+        filter: none;
+        transform: none;
+        animation: none;
+    }
+}
