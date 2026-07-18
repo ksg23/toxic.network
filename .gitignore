@@ -23,6 +23,15 @@ Desktop.ini
 
 # Dependencies (if you add npm etc.)
 node_modules/
+.venv/
+.venv-*/
+api/.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
 
 # Build output (if you add a build step later)
 dist/
