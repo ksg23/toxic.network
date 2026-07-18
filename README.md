@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="core/images/banner.png" alt="toxic.network" width="100%">
+  <img src="core/images/banner-v2.png" alt="toxic.network" width="100%">
 </p>
 
 <p align="center">
