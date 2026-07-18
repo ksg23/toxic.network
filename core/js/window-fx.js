@@ -19,7 +19,7 @@
   }
 
   function clearAnimation(winEl) {
-    winEl.getAnimations().forEach((a) => a.cancel());
+    winEl.getAnimations?.().forEach((a) => a.cancel());
     winEl.style.transform = "";
     winEl.style.opacity = "";
     winEl.style.filter = "";
@@ -52,26 +52,22 @@
         {
           transform: "translate(0px, 0px) scale(1, 1)",
           opacity: 1,
-          filter: "blur(0px)",
           offset: 0,
         },
         {
           // Fabric squash toward the dock
           transform: `translate(${dx * 0.22}px, ${dy * 0.42}px) scale(0.62, 0.22)`,
           opacity: 1,
-          filter: "blur(0px)",
           offset: 0.42,
         },
         {
           transform: `translate(${dx * 0.72}px, ${dy * 0.88}px) scale(${sx * 2.2}, ${sy * 0.9})`,
           opacity: 0.85,
-          filter: "blur(1px)",
           offset: 0.72,
         },
         {
           transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
           opacity: 0,
-          filter: "blur(2px)",
           offset: 1,
         },
       ],
@@ -107,25 +103,21 @@
         {
           transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
           opacity: 0,
-          filter: "blur(2px)",
           offset: 0,
         },
         {
           transform: `translate(${dx * 0.72}px, ${dy * 0.88}px) scale(${sx * 2.2}, ${sy * 0.9})`,
           opacity: 0.85,
-          filter: "blur(1px)",
           offset: 0.28,
         },
         {
           transform: `translate(${dx * 0.22}px, ${dy * 0.42}px) scale(0.62, 0.22)`,
           opacity: 1,
-          filter: "blur(0px)",
           offset: 0.55,
         },
         {
           transform: "translate(0px, 0px) scale(1, 1)",
           opacity: 1,
-          filter: "blur(0px)",
           offset: 1,
         },
       ],

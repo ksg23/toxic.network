@@ -5,11 +5,16 @@
     box-sizing: border-box;
 }
 
+html {
+    /* clip (not hidden) — Firefox breaks position:fixed when body/html use overflow-x:hidden */
+    overflow-x: clip;
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Orbitron", sans-serif;
     font-size: 16px;
     color: #FFFFFF;
-    overflow-x: hidden;
     min-height: 100vh;
     position: relative;
 }
@@ -89,7 +94,7 @@ body {
     transform-origin: center center;
 }
 
-/* Typography — slow cinematic reveal */
+/* Typography — slow cinematic reveal (no filter anim — Firefox can leave text stuck blurred/invisible) */
 h1 {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 600;
@@ -103,7 +108,6 @@ h1 {
     padding: 20px;
     position: relative;
     opacity: 0;
-    filter: blur(12px);
     transform: translateY(28px);
     animation:
         textReveal 3.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards,
@@ -114,18 +118,15 @@ h1 {
 @keyframes textReveal {
     0% {
         opacity: 0;
-        filter: blur(12px);
         transform: translateY(28px);
         letter-spacing: 0.18em;
     }
     55% {
         opacity: 0.85;
-        filter: blur(3px);
         letter-spacing: 0.08em;
     }
     100% {
         opacity: 1;
-        filter: blur(0);
         transform: translateY(0);
         letter-spacing: 0.04em;
     }
@@ -208,11 +209,6 @@ a:active {
     }
 }
 
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
 /* Selection styling */
 ::selection {
     background: rgba(255, 255, 255, 0.2);
@@ -228,7 +224,6 @@ html {
 @media (prefers-reduced-motion: reduce) {
     h1 {
         opacity: 1;
-        filter: none;
         transform: none;
         animation: none;
     }
@@ -279,6 +274,10 @@ html {
     border: none;
     background: transparent;
     cursor: default;
+    appearance: none;
+    -moz-appearance: none;
+    color: inherit;
+    font: inherit;
     transform-origin: 50% 100%;
     transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -437,11 +436,13 @@ html {
         0 0 0 0.5px rgba(255, 255, 255, 0.08) inset;
     transform: scale(0.78);
     opacity: 0;
-    filter: blur(6px);
-    will-change: transform, opacity, filter;
+    will-change: transform, opacity;
 }
 
 .contacts-overlay.is-open .contacts {
+    /* Static end-state fallback if the animation fails (seen in Firefox) */
+    opacity: 1;
+    transform: none;
     animation: finderPopIn 0.48s cubic-bezier(0.16, 1.1, 0.3, 1) both;
 }
 
@@ -471,7 +472,6 @@ html {
     animation: none !important;
     opacity: 1;
     transform: none;
-    filter: none;
 }
 
 .contacts.is-zoomed {
@@ -504,12 +504,10 @@ html {
     0% {
         opacity: 0;
         transform: scale(0.78);
-        filter: blur(8px);
     }
     55% {
         opacity: 1;
         transform: scale(1.035);
-        filter: blur(0);
     }
     78% {
         transform: scale(0.985);
@@ -517,7 +515,6 @@ html {
     100% {
         opacity: 1;
         transform: scale(1);
-        filter: blur(0);
     }
 }
 
@@ -525,12 +522,10 @@ html {
     0% {
         opacity: 1;
         transform: scale(1);
-        filter: blur(0);
     }
     100% {
         opacity: 0;
         transform: scale(0.88);
-        filter: blur(4px);
     }
 }
 
@@ -561,6 +556,8 @@ html {
     border: none;
     padding: 0;
     cursor: default;
+    appearance: none;
+    -moz-appearance: none;
     box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.22);
 }
 
@@ -656,6 +653,9 @@ html {
     background: transparent;
     text-align: left;
     cursor: pointer;
+    appearance: none;
+    -moz-appearance: none;
+    font: inherit;
     color: var(--c-text) !important;
     text-shadow: none;
     transition: background 0.12s ease;
@@ -918,11 +918,12 @@ html {
     font-family: "SF Mono", ui-monospace, Menlo, Monaco, "Cascadia Mono", Consolas, monospace;
     transform: scale(0.78);
     opacity: 0;
-    filter: blur(6px);
-    will-change: transform, opacity, filter;
+    will-change: transform, opacity;
 }
 
 .term-overlay.is-open .term {
+    opacity: 1;
+    transform: none;
     animation: finderPopIn 0.48s cubic-bezier(0.16, 1.1, 0.3, 1) both;
 }
 
@@ -1181,7 +1182,6 @@ a.term__card:hover {
     .term {
         transition: none;
         animation: none !important;
-        filter: none !important;
     }
     .contacts-overlay.is-open .contacts,
     .term-overlay.is-open .term {
