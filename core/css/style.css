@@ -233,3 +233,731 @@ html {
         animation: none;
     }
 }
+
+/* ===== macOS dock ===== */
+.dock {
+    position: fixed;
+    left: 50%;
+    bottom: 14px;
+    z-index: 120;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+.dock__shelf {
+    pointer-events: auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 10px 14px 8px;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(40, 40, 48, 0.38);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.45),
+        0 0 0 0.5px rgba(255, 255, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.dock__separator {
+    width: 1px;
+    height: 42px;
+    margin: 0 2px 10px;
+    background: rgba(255, 255, 255, 0.22);
+    align-self: flex-end;
+}
+
+.dock__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: default;
+    transform-origin: 50% 100%;
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dock__item:hover,
+.dock__item:focus-visible {
+    transform: scale(1.28) translateY(-8px);
+    z-index: 2;
+    outline: none;
+}
+
+.dock__item:active {
+    transform: scale(1.12) translateY(-4px);
+}
+
+.dock__icon {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    background: rgba(20, 20, 28, 0.35);
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255, 255, 255, 0.38),
+        inset 0 -0.5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dock__icon svg,
+.dock__icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: inherit;
+}
+
+.dock__tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-size: 12px;
+    font-weight: 510;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(40, 40, 48, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.dock__item:hover .dock__tooltip,
+.dock__item:focus-visible .dock__tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dock__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.dock__item.is-open .dock__dot {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 520px) {
+    .dock {
+        bottom: 10px;
+        width: calc(100% - 20px);
+        display: flex;
+        justify-content: center;
+    }
+    .dock__shelf {
+        gap: 8px;
+        padding: 8px 12px 6px;
+        border-radius: 18px;
+    }
+    .dock__icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 11px;
+    }
+    .dock__separator {
+        height: 34px;
+        margin-bottom: 8px;
+    }
+}
+
+/* ===== Overlay ===== */
+.about-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 24px 110px;
+    background: rgba(3, 3, 8, 0);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    opacity: 0;
+    transition:
+        opacity 0.35s ease,
+        background 0.35s ease,
+        -webkit-backdrop-filter 0.35s ease,
+        backdrop-filter 0.35s ease;
+}
+
+.about-overlay[hidden] {
+    display: none;
+}
+
+.about-overlay.is-open {
+    opacity: 1;
+    background: rgba(3, 3, 8, 0.5);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+}
+
+/* ===== Finder-style liquid glass window ===== */
+.finder {
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", sans-serif;
+    width: min(720px, 94vw);
+    max-height: min(80vh, 620px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(24, 22, 34, 0.55);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    backdrop-filter: blur(40px) saturate(180%);
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    transform: scale(0.78);
+    opacity: 0;
+    filter: blur(6px);
+    will-change: transform, opacity, filter;
+}
+
+.about-overlay.is-open .finder {
+    animation: finderPopIn 0.48s cubic-bezier(0.16, 1.1, 0.3, 1) both;
+}
+
+.about-overlay.is-closing .finder {
+    animation: finderPopOut 0.28s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.about-overlay.is-minimizing .finder {
+    animation: finderMinimize 0.38s cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+.about-overlay.is-closing,
+.about-overlay.is-minimizing {
+    opacity: 0;
+    background: rgba(3, 3, 8, 0);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    pointer-events: none;
+}
+
+.finder.is-zoomed {
+    width: min(1100px, calc(100vw - 48px));
+    max-height: calc(100vh - 130px);
+    height: calc(100vh - 130px);
+    transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        max-height 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.light__glyph--restore {
+    display: none;
+}
+
+.finder.is-zoomed .light__glyph--plus {
+    display: none;
+}
+
+.finder.is-zoomed .light__glyph--restore {
+    display: flex;
+}
+
+.light--min,
+.light--max {
+    cursor: pointer;
+}
+
+@keyframes finderPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.78);
+        filter: blur(8px);
+    }
+    55% {
+        opacity: 1;
+        transform: scale(1.035);
+        filter: blur(0);
+    }
+    78% {
+        transform: scale(0.985);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes finderPopOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.88);
+        filter: blur(4px);
+    }
+}
+
+@keyframes finderMinimize {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.2) translateY(42vh);
+        filter: blur(4px);
+    }
+}
+
+/* specular sheen */
+.finder::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        150deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0) 40%
+    );
+}
+
+.finder__bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.traffic {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.light {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: default;
+    box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.25);
+}
+
+.light--close {
+    background: #ff5f57;
+    cursor: pointer;
+}
+
+.light--min {
+    background: #febc2e;
+}
+
+.light--max {
+    background: #28c840;
+}
+
+.light__glyph {
+    display: flex;
+    width: 9px;
+    height: 9px;
+    opacity: 0;
+    color: rgba(0, 0, 0, 0.55);
+    transition: opacity 0.12s ease;
+}
+
+.light__glyph svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Show × − + glyphs when hovering the traffic light group (macOS behavior) */
+.traffic:hover .light__glyph,
+.traffic:focus-within .light__glyph {
+    opacity: 1;
+}
+
+.light--close:hover {
+    background: #ff3b30;
+}
+
+.light--min:hover {
+    background: #ffc01e;
+}
+
+.light--max:hover {
+    background: #28cd41;
+}
+
+.finder__title {
+    flex: 1;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: rgba(235, 235, 255, 0.85);
+}
+
+.finder__spacer {
+    width: 53px;
+}
+
+.finder__body {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+}
+
+.finder__sidebar {
+    width: 190px;
+    flex-shrink: 0;
+    padding: 16px 12px;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    overflow-y: auto;
+}
+
+.sidebar__label {
+    margin: 14px 8px 6px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(180, 180, 210, 0.55);
+}
+
+.sidebar__label:first-child {
+    margin-top: 0;
+}
+
+.sidebar__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(230, 230, 245, 0.9) !important;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar__item:hover {
+    background: rgba(10, 132, 255, 0.22);
+    color: #ffffff !important;
+    text-shadow: none;
+}
+
+.sidebar__item.is-active {
+    background: rgba(10, 132, 255, 0.9);
+    color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(10, 132, 255, 0.35);
+}
+
+.sidebar__glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    color: rgba(120, 200, 255, 0.95);
+}
+
+.sidebar__glyph svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+}
+
+.sidebar__logo {
+    width: 17px;
+    height: 17px;
+    display: block;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.sidebar__item.is-active .sidebar__glyph {
+    color: #fff;
+}
+
+.finder__content {
+    flex: 1;
+    padding: 24px 26px;
+    overflow-y: auto;
+}
+
+.panel {
+    animation: panelFade 0.28s ease;
+}
+
+.panel[hidden] {
+    display: none;
+}
+
+@keyframes panelFade {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.panel__head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.panel__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    color: #fff;
+    background: rgba(10, 132, 255, 0.22);
+    box-shadow: inset 0 0 0 1px rgba(120, 180, 255, 0.4), 0 6px 18px rgba(10, 132, 255, 0.28);
+}
+
+.panel__icon svg {
+    width: 26px;
+    height: 26px;
+    display: block;
+}
+
+.panel__icon--logo {
+    padding: 0;
+    background: transparent;
+    box-shadow: 0 6px 18px rgba(10, 132, 255, 0.28);
+    overflow: hidden;
+}
+
+.panel__icon--logo img,
+.panel__icon--logo svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.panel__title {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.panel__sub {
+    margin: 3px 0 0;
+    font-size: 13px;
+    color: rgba(120, 200, 255, 0.9);
+}
+
+.panel__text {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: rgba(205, 205, 230, 0.82);
+}
+
+.panel__visual {
+    margin: 18px 0 4px;
+    display: flex;
+    justify-content: center;
+}
+
+.panel__cardback {
+    width: 120px;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(10, 132, 255, 0.15);
+    transform: rotate(-3deg);
+    transition: transform 0.25s ease;
+}
+
+.panel__cardback:hover {
+    transform: rotate(0deg) scale(1.03);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile__avatar {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 18px rgba(46, 150, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.profile__name {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: #fff;
+}
+
+.profile__handle {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(120, 200, 255, 0.9);
+}
+
+.profile__tag {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: rgba(200, 200, 225, 0.7);
+}
+
+.profile__roles {
+    margin: 20px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(210, 210, 235, 0.85);
+}
+
+.profile__quote {
+    margin: 18px 0;
+    padding: 12px 16px;
+    border-left: 2px solid rgba(10, 132, 255, 0.8);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(235, 235, 255, 0.9);
+}
+
+.profile__bio {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: rgba(200, 200, 225, 0.8);
+}
+
+.profile__location {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(200, 200, 225, 0.7);
+}
+
+.profile__actions {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ghost-btn {
+    padding: 9px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.05);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", "Segoe UI", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: rgba(235, 235, 255, 0.92) !important;
+    transition: all 0.22s ease;
+}
+
+.ghost-btn:hover {
+    border-color: rgba(10, 132, 255, 0.8);
+    background: rgba(10, 132, 255, 0.28);
+    color: #fff !important;
+    text-shadow: none;
+    box-shadow: 0 0 16px rgba(10, 132, 255, 0.4);
+}
+
+.ghost-btn--disabled {
+    opacity: 0.45;
+    cursor: default;
+    pointer-events: none;
+}
+
+@media (max-width: 620px) {
+    .finder__body {
+        flex-direction: column;
+    }
+    .finder__sidebar {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 6px;
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .sidebar__label {
+        display: none;
+    }
+    .sidebar__item {
+        width: auto;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+    .finder__spacer {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .about-overlay,
+    .finder {
+        transition: none;
+        animation: none !important;
+        filter: none !important;
+    }
+    .about-overlay.is-open .finder {
+        opacity: 1;
+        transform: none;
+    }
+}
